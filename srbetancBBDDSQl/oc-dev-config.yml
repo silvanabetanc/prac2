@@ -1,0 +1,141 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: srbetancbbddsql
+  name: srbetancbbddsql
+  namespace: dominio  
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: docker-registry.default.svc:5000/dominio/srbetancbbddsql
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:      
+  labels:
+    app: srbetancbbddsql
+  name: srbetancbbddsql
+  namespace: dominio    
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: srbetancbbddsql
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:      
+      labels:
+        app: srbetancbbddsql
+        deploymentconfig: srbetancbbddsql
+    spec:
+      containers:
+      - env:
+        - name : DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
+          value: "false"
+        - name : TZ
+          value: America/Guayaquil     
+        image: docker-registry.default.svc:5000/dominio/srbetancbbddsql
+        imagePullPolicy: Always
+        name: srbetancbbddsql
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200Mi
+          requests:
+            cpu: 200m
+            memory: 200Mi        
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/app-root/configs/centralizada
+          name: volume-centralizada
+        - mountPath: /opt/app-root/configs/catalogo
+          name: volume-catalogo
+        - mountPath: /opt/app-root/configs/logs
+          name: volume-logs
+        - mountPath: /opt/app-root/configs/servicio
+          name: volume-servicio        
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: centralizada
+        name: volume-centralizada
+      - configMap:
+          defaultMode: 420
+          name: catalogos
+        name: volume-catalogo
+      - configMap:
+          defaultMode: 420
+          name: logconfiguracion
+        name: volume-logs
+      - configMap:
+          defaultMode: 420
+          name: srbetancbbddsql
+        name: volume-servicio      
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - srbetancbbddsql
+        from:
+          kind: ImageStreamTag
+          name: 'srbetancbbddsql:latest'
+          namespace: dominio
+      type: ImageChange
+    - type: ConfigChange
+  test: false
+---
+apiVersion: v1
+kind: Service
+metadata:    
+  labels:
+    app: srbetancbbddsql
+  name: srbetancbbddsql
+  namespace: dominio    
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    deploymentconfig: srbetancbbddsql
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:    
+  labels:
+    app: srbetancbbddsql
+  name: srbetancbbddsql
+  namespace: dominio    
+spec:
+  host: srbetancbbddsql-dominio.apps.desa.bpichincha.com
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: srbetancbbddsql
+    weight: 100
+  wildcardPolicy: None

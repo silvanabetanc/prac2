@@ -1,0 +1,8 @@
+{   
+	"CodigoAplicacion": "1993",     
+	"AutoCarga": true,   
+	"Reintentos" : 0,
+	"TopicoInicial": "T_",   
+	"TagsServersKafka": "SERVIDOR_KAFKA_01,SERVIDOR_KAFKA_02",   
+	"TimeoutKafka": 10000
+}

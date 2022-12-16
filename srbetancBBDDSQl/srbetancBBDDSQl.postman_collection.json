@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "537e75d1-20ae-4fad-b210-135dbac91442",
+		"name": "srbetancBBDDSQl",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "EjecutarConsultar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"headerIn\": {\r\n        \"dispositivo\": \"01010101010101010101010101010101\",\r\n        \"empresa\": \"0010\",\r\n        \"canal\": \"02\",\r\n        \"medio\": \"020007\",\r\n        \"aplicacion\": \"00669\",\r\n        \"agencia\": \"\",\r\n        \"tipoTransaccion\": \"202026101\",\r\n        \"geolocalizacion\": \"adada\",\r\n        \"usuario\": \"USINTERT\",\r\n        \"ip\": \"10.0.94.126\",\r\n        \"requestIp\": \"\",\r\n        \"fechaHora\": \"202104151505451252\",\r\n        \"sesion\": \"ASDASD77R01YH\",\r\n        \"unicidad\": \"adada\",\r\n        \"guid\":\"3F2504E04F8911D39A0C0305E82C3302\",\r\n        \"filler\": \"\",\r\n        \"idioma\": \"es-EC\",\r\n        \"idCliente\": \"0908020753\",\r\n        \"tipoIdCliente\": \"0001\"\r\n    },\r\n    \"bodyIn\": {\r\n         \"packageId\": \"uno\",\r\n        \"appId\": \"uno\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7105/api/v1/Instancia/ConsultarServicioInstancia01",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7105",
+					"path": [
+						"api",
+						"v1",
+						"Instancia",
+						"ConsultarServicioInstancia01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EjecutarCrear",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"headerIn\": {\r\n        \"dispositivo\": \"01010101010101010101010101010101\",\r\n        \"empresa\": \"0010\",\r\n        \"canal\": \"02\",\r\n        \"medio\": \"020007\",\r\n        \"aplicacion\": \"00669\",\r\n        \"agencia\": \"\",\r\n        \"tipoTransaccion\": \"202026101\",\r\n        \"geolocalizacion\": \"adada\",\r\n        \"usuario\": \"USINTERT\",\r\n        \"ip\": \"10.0.94.126\",\r\n        \"requestIp\": \"\",\r\n        \"fechaHora\": \"202104151505451252\",\r\n        \"sesion\": \"ASDASD77R01YH\",\r\n        \"unicidad\": \"adada\",\r\n        \"guid\": \"3F2504E04F8911D39A0C0305E82C3302\",\r\n        \"filler\": \"\",\r\n        \"idioma\": \"es-EC\",\r\n        \"idCliente\": \"0908020753\",\r\n        \"tipoIdCliente\": \"0001\"\r\n    },\r\n    \"bodyIn\": {\r\n        \"packageId\": \"dos\",\r\n        \"appId\": \"dos\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7105/api/v1/Instancia/CrearServicioInstancia01",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7105",
+					"path": [
+						"api",
+						"v1",
+						"Instancia",
+						"CrearServicioInstancia01"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
